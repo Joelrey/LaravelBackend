@@ -29,7 +29,7 @@ class UserController extends Controller
         $rules = [
             'full_name' => 'required|string',
             'email_address' => 'required|email|unique:users',
-            'role' => 'required',
+            'roles' => 'required',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -46,7 +46,7 @@ class UserController extends Controller
         $user->email_address = $request->email_address;
         $user->save();
 
-        $user->roles()->attach([$request->role]);
+        $user->roles()->attach($request->roles);
 
         return response()->json([
             'status' => "error",
